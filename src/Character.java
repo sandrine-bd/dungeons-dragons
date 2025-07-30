@@ -15,7 +15,7 @@ public class Character {
 
     @Override // la méthode doit réécrire une méthode de la classe parente ou d'une interface
     public String toString() {
-        return "Character type = " + type + ", health = " + health + ", attack = " + attack + ", offensiveEquipment = " + offensiveEquipment;
+        return "Character type = " + type + ", Health = " + health + ", Attack = " + attack + ", " + offensiveEquipment;
     }
 
     public String getType() {

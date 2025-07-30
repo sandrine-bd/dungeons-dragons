@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class Menu {
-    private Scanner scanner;
+    private final Scanner scanner;
 
     public Menu (Scanner scanner) {
         this.scanner = scanner;
@@ -14,17 +14,34 @@ public class Menu {
     }
 
     public int getUserChoice() {
-        System.out.println("Your choice: ");
-        return scanner.nextInt();
+        System.out.print("Your choice: ");
+        int choice = scanner.nextInt();
+        scanner.nextLine(); // consomme le \n qui reste après nextInt()
+        return choice;
     }
 
     public Character createCharacter() {
-        scanner.nextLine();
-        System.out.println("Choose type (Warrior / Wizard): ");
-        String type = scanner.nextLine();
+        String type;
+        while (true) {
+            System.out.print("Choose type (Warrior / Wizard): ");
+            type = scanner.nextLine().trim(); // enlève les espaces dans le mot
+            if (type.equalsIgnoreCase("Warrior") || type.equalsIgnoreCase("Wizard")) {
+                break;
+            } else {
+                System.out.print("Invalid type. Please enter 'Warrior' or 'Wizard'.");
+            }
+        }
 
-        System.out.println("Enter name: ");
-        String name = scanner.nextLine();
+        String name;
+        while (true) {
+            System.out.print("Enter name: ");
+            name = scanner.nextLine();
+            if (!name.isEmpty()) {
+                break;
+            } else {
+                System.out.println("Name cannot be empty.");
+            }
+        }
 
         int health;
         int attack;
@@ -48,6 +65,7 @@ public class Menu {
         System.out.println("1. Show character info");
         System.out.println("2. Edit name");
         System.out.println("3. Start the game");
+        System.out.println("4. Quit game");
     }
 
     public void showCharacter(Character character) {
@@ -55,9 +73,16 @@ public class Menu {
     }
 
     public void editCharacterName(Character character) {
-        scanner.nextLine();
-        System.out.println("New name: ");
-        String newName = scanner.nextLine();
+        String newName;
+        while (true) {
+            System.out.print("New name: ");
+            newName = scanner.nextLine().trim();
+            if (!newName.isEmpty()) {
+                break;
+            } else {
+                System.out.println("Name cannot be empty.");
+            }
+        }
         character.setName(newName);
         System.out.println("Name updated");
     }
