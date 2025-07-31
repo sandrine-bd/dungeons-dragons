@@ -1,4 +1,13 @@
+package fr.campus.dungeonsdragons.main;
+
 import java.util.Scanner;
+import java.util.Random;
+
+import fr.campus.dungeonsdragons.character.Character;
+import fr.campus.dungeonsdragons.character.Warrior;
+import fr.campus.dungeonsdragons.character.Wizard;
+import fr.campus.dungeonsdragons.equipment.offensive.*;
+import fr.campus.dungeonsdragons.equipment.defensive.*;
 
 public class Menu {
     private final Scanner scanner;
@@ -9,7 +18,7 @@ public class Menu {
 
     public void displayMainMenu() {
         System.out.println("MAIN MENU");
-        System.out.println("1. New character");
+        System.out.println("1. New fr.campus.dungeonsdragons.character");
         System.out.println("2. Quit game");
     }
 
@@ -45,24 +54,32 @@ public class Menu {
 
         int health;
         int attack;
+        Random random = new Random();
+        DefensiveEquipment defensiveEquipment;
         OffensiveEquipment offensiveEquipment;
+
+        if (random.nextBoolean()) {
+            defensiveEquipment = new SmallPotion();
+        } else {
+            defensiveEquipment = new BigPotion();
+        }
 
         if (type.equalsIgnoreCase("Warrior")) {
             health = getRandomValue(5, 10);
             attack = getRandomValue(5, 10);
-            offensiveEquipment = new OffensiveEquipment("Weapon", 3, "Club");
-        }
-        else {
+            offensiveEquipment = random.nextBoolean() ? new Club() : new Sword();
+            return new Warrior(name, health, attack, offensiveEquipment, defensiveEquipment);
+        } else {
             health = getRandomValue(3, 6);
             attack = getRandomValue(8, 15);
-            offensiveEquipment = new OffensiveEquipment("Spell", 2, "Spark");
+            offensiveEquipment = random.nextBoolean() ? new Lightning() : new Fireball();
+            return new Wizard(name, health, attack, offensiveEquipment, defensiveEquipment);
         }
-        return new Character(type, name, health, attack, offensiveEquipment);
     }
 
     public void displayCharacterMenu(Character character) {
         System.out.println("CHARACTER MENU");
-        System.out.println("1. Show character info");
+        System.out.println("1. Show fr.campus.dungeonsdragons.character info");
         System.out.println("2. Edit name");
         System.out.println("3. Start the game");
         System.out.println("4. Quit game");

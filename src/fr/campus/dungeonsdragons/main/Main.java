@@ -1,3 +1,5 @@
+package fr.campus.dungeonsdragons.main;
+
 import java.util.Scanner;
 
 public class Main {
