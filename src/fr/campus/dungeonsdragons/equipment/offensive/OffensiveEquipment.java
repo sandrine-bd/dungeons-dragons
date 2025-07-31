@@ -4,6 +4,11 @@ public abstract class OffensiveEquipment {
     protected int attackBoost;
     protected String name;
 
+    /**
+     *
+     * @param attackBoost
+     * @param name
+     */
     public OffensiveEquipment(int attackBoost, String name) {
         this.attackBoost = attackBoost;
         this.name = name;

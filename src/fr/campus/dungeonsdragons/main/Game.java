@@ -11,6 +11,11 @@ public class Game {
     private Character player;
     private int position; // 1 à 64
 
+    /**
+     *
+     * @param scanner
+     * @param menu
+     */
     public Game(Scanner scanner, Menu menu) {
         this.scanner = scanner;
         this.menu = menu;
@@ -115,6 +120,11 @@ public class Game {
         }
     }
 
+    /**
+     *
+     * @param roll
+     * @throws OutOfBoardException
+     */
     private void movePlayer(int roll) throws OutOfBoardException {
         int nextPosition = position + roll;
         if (nextPosition > 64) {

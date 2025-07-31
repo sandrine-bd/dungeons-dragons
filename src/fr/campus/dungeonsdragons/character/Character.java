@@ -3,6 +3,7 @@ package fr.campus.dungeonsdragons.character;
 import fr.campus.dungeonsdragons.equipment.offensive.OffensiveEquipment;
 import fr.campus.dungeonsdragons.equipment.defensive.DefensiveEquipment;
 
+
 public abstract class Character {
     private String name;
     private int health;
@@ -10,7 +11,14 @@ public abstract class Character {
     private OffensiveEquipment offensiveEquipment;
     private DefensiveEquipment defensiveEquipment;
 
-    // constructeur : initialisation des attributs
+    /**
+     * Constructeur : initialisation des attributs
+     * @param name
+     * @param health
+     * @param attack
+     * @param offensiveEquipment
+     * @param defensiveEquipment
+     */
     public Character (String name, int health, int attack, OffensiveEquipment offensiveEquipment, DefensiveEquipment defensiveEquipment) {
         this.name = name;
         this.health = health;
@@ -19,7 +27,7 @@ public abstract class Character {
         this.defensiveEquipment = defensiveEquipment;
     }
 
-    public abstract String getType();
+    public abstract String getType(); // méthode à laquelle les classes enfants devront faire appel obligatoirement
 
     @Override
     public String toString() {
