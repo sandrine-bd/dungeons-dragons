@@ -1,7 +1,7 @@
 package fr.campus.dungeonsdragons.equipment.offensive;
 
-public class Weapon extends OffensiveEquipment {
-    public Weapon(int attack, String name) {
+public abstract class Weapon extends OffensiveEquipment {
+    public Weapon(int attackBoost, String name) {
         super(attackBoost, name);
     }
 

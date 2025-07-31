@@ -23,7 +23,7 @@ public abstract class Character {
 
     @Override
     public String toString() {
-        return "Character: " + name + ", Type: " + getType() + ", Health = " + health + ", Attack = " + attack + ", Offensive fr.campus.dungeonsdragons.character.equipment: " + offensiveEquipment + ", Defensive fr.campus.dungeonsdragons.character.equipment: " + defensiveEquipment;
+        return "Name: " + name + ", Type: " + getType() + ", Health: " + health + ", Attack: " + attack + ", Offensive equipment: " + offensiveEquipment + ", Defensive equipment: " + defensiveEquipment;
     }
 
     // getters / setters

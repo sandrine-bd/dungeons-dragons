@@ -54,7 +54,7 @@ public class Game {
                 case 3:
                     return true;
                 case 4:
-                    System.out.println("Exiting to fr.campus.dungeonsdragons.character.main menu...");
+                    System.out.println("Exiting to main menu...");
                     return false;
                 default:
                     System.out.println("Invalid choice.");
@@ -64,7 +64,7 @@ public class Game {
     }
 
     private void play() {
-        System.out.println("fr.campus.dungeonsdragons.character.main.Game starts! You're on cell 1/64.");
+        System.out.println("Game starts! You're on cell 1/64.");
         position = 1;
 
         while (position < 64) {
@@ -84,7 +84,7 @@ public class Game {
                 }
                 System.out.println("Current position: " + position + "/64");
             } else if (input.equals("2")) {
-                System.out.println("fr.campus.dungeonsdragons.character.main.Game aborted. Returning to fr.campus.dungeonsdragons.character.main menu.");
+                System.out.println("Game aborted. Returning to main menu.");
                 return;
             } else {
                 System.out.println("Invalid input. Please enter 1 or 2.");

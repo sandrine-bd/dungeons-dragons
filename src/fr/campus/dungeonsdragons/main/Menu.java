@@ -18,7 +18,7 @@ public class Menu {
 
     public void displayMainMenu() {
         System.out.println("MAIN MENU");
-        System.out.println("1. New fr.campus.dungeonsdragons.character");
+        System.out.println("1. New character");
         System.out.println("2. Quit game");
     }
 
@@ -37,7 +37,7 @@ public class Menu {
             if (type.equalsIgnoreCase("Warrior") || type.equalsIgnoreCase("Wizard")) {
                 break;
             } else {
-                System.out.print("Invalid type. Please enter 'Warrior' or 'Wizard'.");
+                System.out.println("Invalid type. Please enter 'Warrior' or 'Wizard'.");
             }
         }
 
@@ -79,7 +79,7 @@ public class Menu {
 
     public void displayCharacterMenu(Character character) {
         System.out.println("CHARACTER MENU");
-        System.out.println("1. Show fr.campus.dungeonsdragons.character info");
+        System.out.println("1. Show character info");
         System.out.println("2. Edit name");
         System.out.println("3. Start the game");
         System.out.println("4. Quit game");

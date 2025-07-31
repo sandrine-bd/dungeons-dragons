@@ -21,6 +21,6 @@ public abstract class DefensiveEquipment {
 
     @Override
     public String toString() {
-        return getType() + " " + name + " " + defenseBoost + " DEF";
+        return name + " = " + defenseBoost + " health points";
     }
 }
