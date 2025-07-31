@@ -1,6 +1,7 @@
 package fr.campus.dungeonsdragons.main;
 
 import fr.campus.dungeonsdragons.character.Character;
+import fr.campus.dungeonsdragons.exception.OutOfBoardException;
 
 import java.util.Scanner;
 
@@ -78,10 +79,13 @@ public class Game {
             if (input.equals("1")) {
                 int roll = rollDice();
                 System.out.println("You rolled: " + roll);
-                position += roll;
-                if (position> 64) {
-                    position = 64;
+
+                try {
+                    movePlayer(roll);
+                } catch (OutOfBoardException e) {
+                    System.out.println("Warning! " + e.getMessage());
                 }
+
                 System.out.println("Current position: " + position + "/64");
             } else if (input.equals("2")) {
                 System.out.println("Game aborted. Returning to main menu.");
@@ -109,6 +113,14 @@ public class Game {
                 System.out.println("Invalid input. Please enter 'yes' or 'no'.");
             }
         }
+    }
+
+    private void movePlayer(int roll) throws OutOfBoardException {
+        int nextPosition = position + roll;
+        if (nextPosition > 64) {
+            throw new OutOfBoardException("You cannot go beyond cell 64. You're at " + position + " and rolled a " + roll + ".");
+        }
+        position = nextPosition;
     }
 
     private int rollDice() {
