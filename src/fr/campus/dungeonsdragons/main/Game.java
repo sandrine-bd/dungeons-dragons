@@ -1,30 +1,56 @@
 package fr.campus.dungeonsdragons.main;
 
+import fr.campus.dungeonsdragons.board.*;
 import fr.campus.dungeonsdragons.character.Character;
 import fr.campus.dungeonsdragons.exception.OutOfBoardException;
-import fr.campus.dungeonsdragons.board.Cell;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Game {
+    /**
     private final Scanner scanner;
-    private final Menu menu;
+    private final Menu menu; **/
     private Character player;
     private int playerPosition; // 1 à 64
     private ArrayList<Cell> board;
 
-    /**
-     *
-     * @param scanner
-     * @param menu
-     */
-    public Game(Scanner scanner, Menu menu) {
-        this.scanner = scanner;
-        this.menu = menu;
-        this.playerPosition = 1;
+    public Game() {
+        board = new ArrayList<>();
+        board.add(new EmptyCell(1));
+        board.add(new EnemyCell(2));
+        board.add(new WeaponCell(3));
+        board.add(new PotionCell(4));
+        playerPosition = 0;
     }
 
+    public String nextTurn(Character player, Scanner scanner) {
+        System.out.println("TURN MENU");
+        System.out.println("1. Roll the dice");
+        System.out.println("2. Quit game");
+        System.out.print("Your choice: ");
+        String input = scanner.nextLine();
+
+        if (input.equals("2")) {
+            return "QUIT";
+        }
+
+        int diceRoll = 1;
+        System.out.println("You rolled: " + diceRoll);
+
+        if (playerPosition + diceRoll >= board.size()) {
+            System.out.println("You reached the end of the board!");
+            return "GAME_OVER";
+        }
+
+        playerPosition += diceRoll;
+        Cell currentCell = board.get(playerPosition);
+        System.out.println(currentCell.toString());
+
+        return "IN_PROGRESS";
+    }
+
+    /**
     public void launch() {
         boolean running = true;
         while (running) {
@@ -128,6 +154,7 @@ public class Game {
      * @param roll
      * @throws OutOfBoardException
      */
+    /**
     private void movePlayer(int roll) throws OutOfBoardException {
         int nextPosition = playerPosition + roll;
         if (nextPosition > 64) {
@@ -139,4 +166,5 @@ public class Game {
     private int rollDice() {
         return 1 + (int)(Math.random() * 6);
     }
+    **/
 }
