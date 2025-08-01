@@ -2,14 +2,17 @@ package fr.campus.dungeonsdragons.main;
 
 import fr.campus.dungeonsdragons.character.Character;
 import fr.campus.dungeonsdragons.exception.OutOfBoardException;
+import fr.campus.dungeonsdragons.board.Cell;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Game {
     private final Scanner scanner;
     private final Menu menu;
     private Character player;
-    private int position; // 1 à 64
+    private int playerPosition; // 1 à 64
+    private ArrayList<Cell> board;
 
     /**
      *
@@ -19,7 +22,7 @@ public class Game {
     public Game(Scanner scanner, Menu menu) {
         this.scanner = scanner;
         this.menu = menu;
-        this.position = 1;
+        this.playerPosition = 1;
     }
 
     public void launch() {
@@ -71,9 +74,9 @@ public class Game {
 
     private void play() {
         System.out.println("Game starts! You're on cell 1/64.");
-        position = 1;
+        playerPosition = 1;
 
-        while (position < 64) {
+        while (playerPosition < 64) {
             System.out.println("TURN MENU");
             System.out.println("1. Roll the dice");
             System.out.println("2. Quit game");
@@ -91,7 +94,7 @@ public class Game {
                     System.out.println("Warning! " + e.getMessage());
                 }
 
-                System.out.println("Current position: " + position + "/64");
+                System.out.println("Current position: " + playerPosition + "/64");
             } else if (input.equals("2")) {
                 System.out.println("Game aborted. Returning to main menu.");
                 return;
@@ -126,11 +129,11 @@ public class Game {
      * @throws OutOfBoardException
      */
     private void movePlayer(int roll) throws OutOfBoardException {
-        int nextPosition = position + roll;
+        int nextPosition = playerPosition + roll;
         if (nextPosition > 64) {
-            throw new OutOfBoardException("You cannot go beyond cell 64. You're at " + position + " and rolled a " + roll + ".");
+            throw new OutOfBoardException("You cannot go beyond cell 64. You're at " + playerPosition + " and rolled a " + roll + ".");
         }
-        position = nextPosition;
+        playerPosition = nextPosition;
     }
 
     private int rollDice() {

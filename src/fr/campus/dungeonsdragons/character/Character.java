@@ -6,23 +6,23 @@ import fr.campus.dungeonsdragons.equipment.defensive.DefensiveEquipment;
 
 public abstract class Character {
     private String name;
-    private int health;
-    private int attack;
+    private int lifePoints;
+    private int strength;
     private OffensiveEquipment offensiveEquipment;
     private DefensiveEquipment defensiveEquipment;
 
     /**
      * Constructeur : initialisation des attributs
      * @param name
-     * @param health
-     * @param attack
+     * @param lifePoints
+     * @param strength
      * @param offensiveEquipment
      * @param defensiveEquipment
      */
-    public Character (String name, int health, int attack, OffensiveEquipment offensiveEquipment, DefensiveEquipment defensiveEquipment) {
+    public Character (String name, int lifePoints, int strength, OffensiveEquipment offensiveEquipment, DefensiveEquipment defensiveEquipment) {
         this.name = name;
-        this.health = health;
-        this.attack = attack;
+        this.lifePoints = lifePoints;
+        this.strength = strength;
         this.offensiveEquipment = offensiveEquipment;
         this.defensiveEquipment = defensiveEquipment;
     }
@@ -31,7 +31,7 @@ public abstract class Character {
 
     @Override
     public String toString() {
-        return "Name: " + name + ", Type: " + getType() + ", Health: " + health + ", Attack: " + attack + ", Offensive equipment: " + offensiveEquipment + ", Defensive equipment: " + defensiveEquipment;
+        return "Name: " + name + ", Type: " + getType() + ", Life: " + lifePoints + ", Strength: " + strength + ", Offensive equipment: " + offensiveEquipment + ", Defensive equipment: " + defensiveEquipment;
     }
 
     // getters / setters
@@ -42,18 +42,18 @@ public abstract class Character {
         this.name = name;
     }
 
-    public int getHealth() {
-        return health;
+    public int getLifePoints() {
+        return lifePoints;
     }
-    public void setHealth(int health) {
-        this.health = health;
+    public void setLifePoints(int lifePoints) {
+        this.lifePoints = lifePoints;
     }
 
-    public int getAttack() {
-        return attack;
+    public int getStrength() {
+        return strength;
     }
-    public void setAttack(int attack) {
-        this.attack = attack;
+    public void setStrength(int strength) {
+        this.strength = strength;
     }
 
     public OffensiveEquipment getOffensiveEquipment() {

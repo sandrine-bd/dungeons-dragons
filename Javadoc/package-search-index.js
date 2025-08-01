@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"fr.campus.dungeonsdragons.character"},{"l":"fr.campus.dungeonsdragons.equipment.defensive"},{"l":"fr.campus.dungeonsdragons.equipment.offensive"},{"l":"fr.campus.dungeonsdragons.exception"},{"l":"fr.campus.dungeonsdragons.main"}];updateSearchResults();
