@@ -1,18 +1,18 @@
 package fr.campus.dungeonsdragons.board;
 
-public class EmptyCell extends Cell {
+public class LightningCell extends Cell {
 
-    public EmptyCell(int position) {
+    public LightningCell(int position) {
         super(position);
     }
 
     @Override
     public String getType() {
-        return "Empty";
+        return "Lightning";
     }
 
     @Override
     public String toString() {
-        return "You landed on an empty cell";
+        return "You found a lightning: Strength +2";
     }
 }

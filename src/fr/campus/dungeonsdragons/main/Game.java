@@ -2,7 +2,9 @@ package fr.campus.dungeonsdragons.main;
 
 import fr.campus.dungeonsdragons.board.*;
 import fr.campus.dungeonsdragons.character.Character;
+import fr.campus.dungeonsdragons.equipment.offensive.Lightning;
 import fr.campus.dungeonsdragons.exception.OutOfBoardException;
+import fr.campus.dungeonsdragons.enemy.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -18,9 +20,15 @@ public class Game {
     public Game() {
         board = new ArrayList<>();
         board.add(new EmptyCell(1));
-        board.add(new EnemyCell(2));
-        board.add(new WeaponCell(3));
-        board.add(new PotionCell(4));
+        board.add(new DragonCell(2));
+        board.add(new ClubCell(3));
+        board.add(new SmallPotionCell(4));
+        board.add(new BigPotionCell(5));
+        board.add(new GoblinCell(6));
+        board.add(new SorcererCell(7));
+        board.add(new FireballCell(8));
+        board.add(new LightningCell(9));
+        board.add(new SwordCell(10));
         playerPosition = 0;
     }
 

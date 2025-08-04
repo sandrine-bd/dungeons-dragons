@@ -1,18 +1,18 @@
 package fr.campus.dungeonsdragons.board;
 
-public class EmptyCell extends Cell {
+public class ClubCell extends Cell {
 
-    public EmptyCell(int position) {
+    public ClubCell(int position) {
         super(position);
     }
 
     @Override
     public String getType() {
-        return "Empty";
+        return "Club";
     }
 
     @Override
     public String toString() {
-        return "You landed on an empty cell";
+        return "You found a club: Strength +3";
     }
 }

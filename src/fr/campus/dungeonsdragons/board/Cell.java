@@ -15,7 +15,6 @@ public abstract class Cell {
         this.position = position;
     }
 
-    public abstract String getType(); // Empty, Enemy, Weapon, Potion
-    public abstract String getContentName(); // Nom de l'objet ou ennemi ou vide
+    public abstract String getType();
     public abstract String toString();
 }

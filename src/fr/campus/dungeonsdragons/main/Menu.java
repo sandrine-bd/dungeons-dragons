@@ -73,12 +73,12 @@ public class Menu {
             health = getRandomValue(5, 10);
             attack = getRandomValue(5, 10);
             offensiveEquipment = random.nextBoolean() ? new Club() : new Sword();
-            return new Warrior(id, name, health, attack, offensiveEquipment, defensiveEquipment);
+            return new Warrior(id, name, attack, health, offensiveEquipment, defensiveEquipment);
         } else {
             health = getRandomValue(3, 6);
             attack = getRandomValue(8, 15);
             offensiveEquipment = random.nextBoolean() ? new Lightning() : new Fireball();
-            return new Wizard(id, name, health, attack, offensiveEquipment, defensiveEquipment);
+            return new Wizard(id, name, attack, health, offensiveEquipment, defensiveEquipment);
         }
     }
 

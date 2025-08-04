@@ -1,18 +1,18 @@
 package fr.campus.dungeonsdragons.board;
 
-public class EmptyCell extends Cell {
+public class SwordCell extends Cell {
 
-    public EmptyCell(int position) {
+    public SwordCell(int position) {
         super(position);
     }
 
     @Override
     public String getType() {
-        return "Empty";
+        return "Sword";
     }
 
     @Override
     public String toString() {
-        return "You landed on an empty cell";
+        return "You found a sword: Strength +5";
     }
 }

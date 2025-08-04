@@ -1,18 +1,18 @@
 package fr.campus.dungeonsdragons.board;
 
-public class EmptyCell extends Cell {
+public class GoblinCell extends Cell {
 
-    public EmptyCell(int position) {
+    public GoblinCell(int position) {
         super(position);
     }
 
     @Override
     public String getType() {
-        return "Empty";
+        return "Goblin";
     }
 
     @Override
     public String toString() {
-        return "You landed on an empty cell";
+        return "You encountered a goblin!";
     }
 }
