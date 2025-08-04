@@ -4,8 +4,8 @@ import fr.campus.dungeonsdragons.equipment.offensive.OffensiveEquipment;
 import fr.campus.dungeonsdragons.equipment.defensive.DefensiveEquipment;
 
 public class Wizard extends Character {
-    public Wizard (String name, int health, int attack, OffensiveEquipment offensiveEquipment, DefensiveEquipment defensiveEquipment) {
-        super(name,health,attack,offensiveEquipment,defensiveEquipment);
+    public Wizard (int id, String name, int health, int attack, OffensiveEquipment offensiveEquipment, DefensiveEquipment defensiveEquipment) {
+        super(id,name,health,attack,offensiveEquipment,defensiveEquipment);
     }
 
     @Override

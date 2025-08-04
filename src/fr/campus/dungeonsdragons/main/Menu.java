@@ -2,18 +2,23 @@ package fr.campus.dungeonsdragons.main;
 
 import java.util.Scanner;
 import java.util.Random;
+import java.util.List;
 
 import fr.campus.dungeonsdragons.character.Character;
 import fr.campus.dungeonsdragons.character.Warrior;
 import fr.campus.dungeonsdragons.character.Wizard;
 import fr.campus.dungeonsdragons.equipment.offensive.*;
 import fr.campus.dungeonsdragons.equipment.defensive.*;
+import fr.campus.dungeonsdragons.db.CharacterDAO;
+import fr.campus.dungeonsdragons.db.ConnexionMySQL;
 
 public class Menu {
     private final Scanner scanner;
+    private final CharacterDAO characterDAO;
 
     public Menu (Scanner scanner) {
         this.scanner = scanner;
+        this.characterDAO = new ConnexionMySQL().getCharacterDAO();
     }
 
     public void displayMainMenu() {
@@ -68,12 +73,12 @@ public class Menu {
             health = getRandomValue(5, 10);
             attack = getRandomValue(5, 10);
             offensiveEquipment = random.nextBoolean() ? new Club() : new Sword();
-            return new Warrior(name, health, attack, offensiveEquipment, defensiveEquipment);
+            return new Warrior(id, name, health, attack, offensiveEquipment, defensiveEquipment);
         } else {
             health = getRandomValue(3, 6);
             attack = getRandomValue(8, 15);
             offensiveEquipment = random.nextBoolean() ? new Lightning() : new Fireball();
-            return new Wizard(name, health, attack, offensiveEquipment, defensiveEquipment);
+            return new Wizard(id, name, health, attack, offensiveEquipment, defensiveEquipment);
         }
     }
 

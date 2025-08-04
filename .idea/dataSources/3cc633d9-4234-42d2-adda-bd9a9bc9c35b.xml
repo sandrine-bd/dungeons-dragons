@@ -1216,7 +1216,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     <schema id="288" parent="1" name="dungeons_dragons">
       <AutoIntrospectionLevel>3</AutoIntrospectionLevel>
       <LastIntrospectionLevel>3</LastIntrospectionLevel>
-      <LastIntrospectionLocalTimestamp>2025-08-01.13:02:06</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2025-08-01.13:28:36</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <schema id="289" parent="1" name="dungeonsdragons">
@@ -1282,7 +1282,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <Host>localhost</Host>
       <Plugin>auth_socket</Plugin>
     </user>
-    <table id="306" parent="288" name="GameCharacter">
+    <table id="306" parent="288" name="Character">
       <DetailsLevel>3</DetailsLevel>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
