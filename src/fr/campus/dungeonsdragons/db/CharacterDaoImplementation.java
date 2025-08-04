@@ -1,4 +1,5 @@
 package fr.campus.dungeonsdragons.db;
+import com.google.gson.Gson;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import fr.campus.dungeonsdragons.equipment.defensive.*;
 
 public class CharacterDaoImplementation implements CharacterDAO {
     Connection connection = null;
+    private final Gson gson = new Gson();
 
     public CharacterDaoImplementation() {
         try {
@@ -28,8 +30,8 @@ public class CharacterDaoImplementation implements CharacterDAO {
         stmt.setString(2, character.getName());
         stmt.setInt(3, character.getLifePoints());
         stmt.setInt(4, character.getStrength());
-        stmt.setString(5, character.getOffensiveEquipment().getName());
-        stmt.setString(6, character.getDefensiveEquipment().getName());
+        stmt.setString(5, gson.toJson(character.getOffensiveEquipment())); // utilise Gson pour sérialiser les équipements
+        stmt.setString(6, gson.toJson(character.getDefensiveEquipment()));
 
         stmt.executeUpdate();
 
@@ -42,8 +44,9 @@ public class CharacterDaoImplementation implements CharacterDAO {
 
     public void delete (int id) throws SQLException {
         String query = "DELETE FROM Character WHERE id = ?";
-        Statement statement = connection.createStatement();
-        statement.executeUpdate(query);
+        PreparedStatement stmt = connection.prepareStatement(query);
+        stmt.setInt(1, id);
+        stmt.executeUpdate();
     }
 
     @Override
@@ -60,8 +63,10 @@ public class CharacterDaoImplementation implements CharacterDAO {
                 int strength = rs.getInt("Strength");
                 String offensiveEquipment = rs.getString("OffensiveEquipment");
                 String defensiveEquipment = rs.getString("DefensiveEquipment");
-                OffensiveEquipment offensive = getOffensive(offensiveEquipment);
-                DefensiveEquipment defensive = getDefensive(defensiveEquipment);
+
+                // désérialisatin avec Gson
+                OffensiveEquipment offensive = gson.fromJson(offensiveEquipment, OffensiveEquipment.class);
+                DefensiveEquipment defensive = gson.fromJson(defensiveEquipment, DefensiveEquipment.class);
 
                 return type.equalsIgnoreCase("Warrior")
                         ? new Warrior(characterId, name, lifePoints, strength, offensive, defensive)
@@ -83,23 +88,11 @@ public class CharacterDaoImplementation implements CharacterDAO {
                 String name = result.getString("Name");
                 int life = result.getInt("LifePoints");
                 int strength = result.getInt("Strength");
-                String offEq = result.getString("OffensiveEquipment");
-                String defEq = result.getString("DefensiveEquipment");
-
-                // reconstruire les équipements
-                OffensiveEquipment offensive = switch (offEq) {
-                    case "Club" -> new Club();
-                    case "Sword" -> new Sword();
-                    case "Lightning" -> new Lightning();
-                    case "Fireball" -> new Fireball();
-                    default -> throw new IllegalArgumentException("Unknown offensive equipment: " + offEq);
-                };
-
-                DefensiveEquipment defensive = switch (defEq) {
-                    case "Small Potion" -> new SmallPotion();
-                    case "Big Potion" -> new BigPotion();
-                    default -> throw new IllegalArgumentException("Unknown defensive equipment: " + defEq);
-                };
+                String offensiveJson = result.getString("OffensiveEquipment");
+                String defensiveJson = result.getString("DefensiveEquipment");
+                // utilise Gson pour désérialiser
+                OffensiveEquipment offensive = gson.fromJson(offensiveJson, OffensiveEquipment.class);
+                DefensiveEquipment defensive = gson.fromJson(defensiveJson, DefensiveEquipment.class);
 
                 Character c;
                 if (type.equalsIgnoreCase("Warrior")) {
@@ -122,8 +115,8 @@ public class CharacterDaoImplementation implements CharacterDAO {
         stmt.setString(2, character.getName());
         stmt.setInt(3, character.getLifePoints());
         stmt.setInt(4, character.getStrength());
-        stmt.setString(5, character.getOffensiveEquipment().getName());
-        stmt.setString(6, character.getDefensiveEquipment().getName());
+        stmt.setString(5, gson.toJson(character.getOffensiveEquipment()));
+        stmt.setString(6, gson.toJson(character.getDefensiveEquipment()));
         stmt.setInt(7, character.getId());
         
         stmt.executeUpdate();
@@ -136,22 +129,5 @@ public class CharacterDaoImplementation implements CharacterDAO {
         stmt.setInt(2, character.getId());
 
         stmt.executeUpdate();
-    }
-
-    public OffensiveEquipment getOffensive(String offensiveName) {
-        return switch(offensiveName) {
-            case "Club" -> new Club();
-            case "Sword" -> new Sword();
-            case "Lightning" -> new Lightning();
-            case "Fireball" -> new Fireball();
-            default -> throw new IllegalArgumentException("Unknown offensive equipment: " + offensiveName);
-        };
-    }
-    public DefensiveEquipment getDefensive(String defensiveName) {
-        return switch(defensiveName) {
-            case "Small Potion" -> new SmallPotion();
-            case "Big Potion" -> new BigPotion();
-            default -> throw new IllegalArgumentException("Unknown defensive equipment: " + defensiveName);
-        };
     }
 }
