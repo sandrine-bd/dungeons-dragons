@@ -1,5 +1,9 @@
 package fr.campus.dungeonsdragons.board;
 
+import fr.campus.dungeonsdragons.character.Character;
+import fr.campus.dungeonsdragons.equipment.defensive.Potion;
+import fr.campus.dungeonsdragons.equipment.defensive.BigPotion;
+
 public class BigPotionCell extends Cell {
 
     public BigPotionCell(int position) {
@@ -13,6 +17,13 @@ public class BigPotionCell extends Cell {
 
     @Override
     public String toString() {
-        return "You found a big potion: Life points +5";
+        return "You find a big potion: Life points +5";
+    }
+
+    @Override
+    public void interact(Character character) {
+        Potion potion = new BigPotion();
+        character.setLifePoints(character.getLifePoints() + potion.getDefenseBoost());
+        System.out.println("You drink a big potion. Life points increased by " + potion.getDefenseBoost());
     }
 }

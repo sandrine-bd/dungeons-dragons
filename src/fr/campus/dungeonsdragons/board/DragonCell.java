@@ -1,6 +1,11 @@
 package fr.campus.dungeonsdragons.board;
 
+import fr.campus.dungeonsdragons.character.Character;
+import fr.campus.dungeonsdragons.enemy.Enemy;
+import fr.campus.dungeonsdragons.enemy.Dragon;
+
 public class DragonCell extends Cell {
+    private final Enemy dragon = new Dragon("Dragon", 4, 15);
 
     public DragonCell(int position) {
         super(position);
@@ -13,6 +18,25 @@ public class DragonCell extends Cell {
 
     @Override
     public String toString() {
-        return "You encountered a dragon!";
+        return "You encounter a dragon!";
+    }
+
+    @Override
+    public void interact (Character character) {
+        System.out.println("You encounter a dragon! FIGHT STARTING: " + character.getName() + " (" + character.getLifePoints() + " life points) attacks Dragon ("
+                + dragon.getLifePoints() + " life points) with " + character.getStrength() + " strength points.");
+        dragon.setLifePoints(dragon.getLifePoints() - character.getStrength());
+        if (dragon.getLifePoints() <= 0) {
+            System.out.println("Dragon defeated!");
+        } else {
+            System.out.println("The dragon has now " + dragon.getLifePoints() + " life points. He hits you with " + dragon.getStrength() + " strength points.");
+            character.setLifePoints(character.getLifePoints() - dragon.getStrength());
+            if (character.getLifePoints() <= 0) {
+                System.out.println("You're defeated! GAME OVER!");
+                // ajouter fin du jeu
+            } else {
+                System.out.println("You now have " + character.getLifePoints() + " life points.");
+            }
+        }
     }
 }

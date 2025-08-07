@@ -1,5 +1,7 @@
 package fr.campus.dungeonsdragons.board;
 
+import fr.campus.dungeonsdragons.character.Character;
+
 public class EmptyCell extends Cell {
 
     public EmptyCell(int position) {
@@ -13,6 +15,11 @@ public class EmptyCell extends Cell {
 
     @Override
     public String toString() {
-        return "You landed on an empty cell";
+        return "You land on an empty cell";
+    }
+
+    @Override
+    public void interact (Character character) {
+        System.out.println("Empty cell");
     }
 }

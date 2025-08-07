@@ -10,9 +10,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Game {
-    /**
-    private final Scanner scanner;
-    private final Menu menu; **/
+
     private Character player;
     private int playerPosition; // 1 à 64
     private ArrayList<Cell> board;
@@ -157,12 +155,6 @@ public class Game {
         }
     }
 
-    /**
-     *
-     * @param roll
-     * @throws OutOfBoardException
-     */
-    /**
     private void movePlayer(int roll) throws OutOfBoardException {
         int nextPosition = playerPosition + roll;
         if (nextPosition > 64) {

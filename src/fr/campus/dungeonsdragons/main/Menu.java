@@ -82,10 +82,6 @@ public class Menu {
         }
     }
 
-    /**
-     *
-     * @param character
-     */
     public void displayCharacterMenu(Character character) {
         System.out.println("CHARACTER MENU");
         System.out.println("1. Show character info");
@@ -113,12 +109,6 @@ public class Menu {
         System.out.println("Name updated");
     }
 
-    /**
-     *
-     * @param min
-     * @param max
-     * @return
-     */
     private int getRandomValue(int min, int max) {
         return min + (int)(Math.random() * ((max-min) + 1));
     }
