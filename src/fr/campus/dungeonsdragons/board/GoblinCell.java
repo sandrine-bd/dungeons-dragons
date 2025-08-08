@@ -23,7 +23,7 @@ public class GoblinCell extends Cell {
 
     @Override
     public void interact (Character character) {
-        System.out.println("You encounter a goblin! FIGHT STARTING: " + character.getName() + " (" + character.getLifePoints() + " life points) attacks Goblin ("
+        System.out.println("FIGHT STARTING: " + character.getName() + " (" + character.getLifePoints() + " life points) attacks Goblin ("
                 + goblin.getLifePoints() + " life points) with " + character.getStrength() + " strength points.");
         goblin.setLifePoints(goblin.getLifePoints() - character.getStrength());
         if (goblin.getLifePoints() <= 0) {
@@ -32,7 +32,7 @@ public class GoblinCell extends Cell {
             System.out.println("The goblin has now " + goblin.getLifePoints() + " life points. He hits you with " + goblin.getStrength() + " strength points.");
             character.setLifePoints(character.getLifePoints() - goblin.getStrength());
             if (character.getLifePoints() <= 0) {
-                System.out.println("You're defeated! GAME OVER!");
+                System.out.println("You're defeated!");
                 // ajouter fin du jeu
             } else {
                 System.out.println("You now have " + character.getLifePoints() + " life points.");

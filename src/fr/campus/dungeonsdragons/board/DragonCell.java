@@ -23,7 +23,7 @@ public class DragonCell extends Cell {
 
     @Override
     public void interact (Character character) {
-        System.out.println("You encounter a dragon! FIGHT STARTING: " + character.getName() + " (" + character.getLifePoints() + " life points) attacks Dragon ("
+        System.out.println("FIGHT STARTING: " + character.getName() + " (" + character.getLifePoints() + " life points) attacks Dragon ("
                 + dragon.getLifePoints() + " life points) with " + character.getStrength() + " strength points.");
         dragon.setLifePoints(dragon.getLifePoints() - character.getStrength());
         if (dragon.getLifePoints() <= 0) {
@@ -32,7 +32,7 @@ public class DragonCell extends Cell {
             System.out.println("The dragon has now " + dragon.getLifePoints() + " life points. He hits you with " + dragon.getStrength() + " strength points.");
             character.setLifePoints(character.getLifePoints() - dragon.getStrength());
             if (character.getLifePoints() <= 0) {
-                System.out.println("You're defeated! GAME OVER!");
+                System.out.println("You're defeated!");
                 // ajouter fin du jeu
             } else {
                 System.out.println("You now have " + character.getLifePoints() + " life points.");

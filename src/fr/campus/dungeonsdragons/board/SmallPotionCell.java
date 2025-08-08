@@ -17,13 +17,13 @@ public class SmallPotionCell extends Cell {
 
     @Override
     public String toString() {
-        return "You find a small potion: Life points +2";
+        return "You find a small potion!";
     }
 
     @Override
     public void interact(Character character) {
         Potion potion = new SmallPotion();
         character.setLifePoints(character.getLifePoints() + potion.getDefenseBoost());
-        System.out.println("You drink a small potion. Life points increased by " + potion.getDefenseBoost());
+        System.out.println("Life points +" + potion.getDefenseBoost());
     }
 }

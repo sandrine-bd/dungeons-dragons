@@ -24,7 +24,7 @@ public class CharacterDaoImplementation implements CharacterDAO {
     }
     @Override
     public int add(Character character) throws SQLException {
-        String query = "INSERT INTO Character (type, name, lifePoints, strength, offensiveEquipment, defensiveEquipment) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO characters (type, name, lifePoints, strength, offensiveEquipment, defensiveEquipment) VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         stmt.setString(1, character.getType());
         stmt.setString(2, character.getName());
@@ -43,7 +43,7 @@ public class CharacterDaoImplementation implements CharacterDAO {
     }
 
     public void delete (int id) throws SQLException {
-        String query = "DELETE FROM Character WHERE id = ?";
+        String query = "DELETE FROM characters WHERE id = ?";
         PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setInt(1, id);
         stmt.executeUpdate();
@@ -51,7 +51,7 @@ public class CharacterDaoImplementation implements CharacterDAO {
 
     @Override
     public Character getCharacter(int id) throws SQLException {
-        String query = "SELECT * FROM Character WHERE id = ?";
+        String query = "SELECT * FROM characters WHERE id = ?";
         PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setInt(1, id);
         try (ResultSet rs = stmt.executeQuery()) {
@@ -78,7 +78,7 @@ public class CharacterDaoImplementation implements CharacterDAO {
     @Override
     public List<Character> getCharacters() throws SQLException {
         List<Character> list = new ArrayList<>();
-        String query = "SELECT * FROM Character";
+        String query = "SELECT * FROM characters";
 
         try (Statement stmt = connection.createStatement();
             ResultSet result = stmt.executeQuery(query)) {
@@ -94,22 +94,22 @@ public class CharacterDaoImplementation implements CharacterDAO {
                 OffensiveEquipment offensive = gson.fromJson(offensiveJson, OffensiveEquipment.class);
                 DefensiveEquipment defensive = gson.fromJson(defensiveJson, DefensiveEquipment.class);
 
-                Character c;
+                Character character;
                 if (type.equalsIgnoreCase("Warrior")) {
-                    c = new Warrior(id, name, life, strength, offensive, defensive);
+                    character = new Warrior(id, name, life, strength, offensive, defensive);
                 } else if (type.equalsIgnoreCase("Wizard")) {
-                    c = new Wizard(id, name, life, strength, offensive, defensive);
+                    character = new Wizard(id, name, life, strength, offensive, defensive);
                 } else {
                     throw new IllegalArgumentException("Unknown character type: " + type);
                 }
-                list.add(c);
+                list.add(character);
             }
         } return list;
     }
 
     @Override
     public void update(Character character) throws SQLException {
-        String query = "UPDATE Character SET Type = ?, Name = ?, LifePoints = ?, Strength = ?, OffensiveEquipment = ?, DefensiveEquipment = ? WHERE Id = ?";
+        String query = "UPDATE characters SET Type = ?, Name = ?, LifePoints = ?, Strength = ?, OffensiveEquipment = ?, DefensiveEquipment = ? WHERE Id = ?";
         PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setString(1, character.getType());
         stmt.setString(2, character.getName());
@@ -123,7 +123,7 @@ public class CharacterDaoImplementation implements CharacterDAO {
     }
 
     public void changeLifePoints(Character character) throws SQLException {
-        String query = "UPDATE Character SET LifePoints = ? WHERE Id = ?";
+        String query = "UPDATE characters SET LifePoints = ? WHERE Id = ?";
         PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setInt(1, character.getLifePoints());
         stmt.setInt(2, character.getId());

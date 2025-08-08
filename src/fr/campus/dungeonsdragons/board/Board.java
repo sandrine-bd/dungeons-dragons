@@ -51,10 +51,6 @@ public class Board {
         }
     }
 
-    public int rollDice() {
-        return (int) (Math.random() * 6) + 1;
-    }
-
     // Interface fonctionnelle pour créer dynamiquement les cellules selon leur type
     @FunctionalInterface
     private interface CellFactory {

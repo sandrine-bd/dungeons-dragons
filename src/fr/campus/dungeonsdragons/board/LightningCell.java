@@ -18,7 +18,7 @@ public class LightningCell extends Cell {
 
     @Override
     public String toString() {
-        return "You find a lightning: Strength +2";
+        return "You find a lightning!";
     }
 
     @Override
@@ -27,9 +27,9 @@ public class LightningCell extends Cell {
             Spell lightning = new Lightning();
             character.setOffensiveEquipment(lightning);
             character.setStrength(character.getStrength() + lightning.getAttackBoost());
-            System.out.println("You pick a lightning. Strength increased by " + lightning.getAttackBoost());
+            System.out.println("Strength +" + lightning.getAttackBoost());
         } else {
-            System.out.println("You find a lightning, but can't use it.");
+            System.out.println("Unfortunately, you can't use it.");
         }
     }
 }

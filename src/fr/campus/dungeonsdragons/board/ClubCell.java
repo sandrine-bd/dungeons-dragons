@@ -18,7 +18,7 @@ public class ClubCell extends Cell {
 
     @Override
     public String toString() {
-        return "You find a club: Strength +3";
+        return "You find a club!";
     }
 
     @Override
@@ -27,9 +27,9 @@ public class ClubCell extends Cell {
             Weapon club = new Club();
             character.setOffensiveEquipment(club);
             character.setStrength(character.getStrength() + club.getAttackBoost());
-            System.out.println("You pick a club. Strength increased by " + club.getAttackBoost());
+            System.out.println("Strength +" + club.getAttackBoost());
         } else {
-            System.out.println("You find a club, but can't use it.");
+            System.out.println("Unfortunately you can't use it.");
         }
     }
 }

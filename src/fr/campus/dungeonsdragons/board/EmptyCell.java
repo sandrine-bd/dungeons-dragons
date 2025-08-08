@@ -15,11 +15,11 @@ public class EmptyCell extends Cell {
 
     @Override
     public String toString() {
-        return "You land on an empty cell";
+        return "You land on an empty cell.";
     }
 
     @Override
     public void interact (Character character) {
-        System.out.println("Empty cell");
+        System.out.println("Nothing happens.");
     }
 }

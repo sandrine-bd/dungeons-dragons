@@ -1,170 +1,77 @@
 package fr.campus.dungeonsdragons.main;
 
-import fr.campus.dungeonsdragons.board.*;
+import fr.campus.dungeonsdragons.board.Board;
+import fr.campus.dungeonsdragons.board.Cell;
 import fr.campus.dungeonsdragons.character.Character;
-import fr.campus.dungeonsdragons.equipment.offensive.Lightning;
 import fr.campus.dungeonsdragons.exception.OutOfBoardException;
-import fr.campus.dungeonsdragons.enemy.*;
 
-import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Random;
 
 public class Game {
+    private final Board board;
+    private int playerPosition = 0;
+    private boolean isGameOver = false;
+    private final Random dice;
+    private final Menu menu;
 
-    private Character player;
-    private int playerPosition; // 1 à 64
-    private ArrayList<Cell> board;
-
-    public Game() {
-        board = new ArrayList<>();
-        board.add(new EmptyCell(1));
-        board.add(new DragonCell(2));
-        board.add(new ClubCell(3));
-        board.add(new SmallPotionCell(4));
-        board.add(new BigPotionCell(5));
-        board.add(new GoblinCell(6));
-        board.add(new SorcererCell(7));
-        board.add(new FireballCell(8));
-        board.add(new LightningCell(9));
-        board.add(new SwordCell(10));
-        playerPosition = 0;
+    public Game(Menu menu) {
+        this.board = new Board();
+        this.dice = new Random();
+        this.menu = menu;
     }
 
-    public String nextTurn(Character player, Scanner scanner) {
-        System.out.println("TURN MENU");
-        System.out.println("1. Roll the dice");
-        System.out.println("2. Quit game");
-        System.out.print("Your choice: ");
-        String input = scanner.nextLine();
-
-        if (input.equals("2")) {
-            return "QUIT";
-        }
-
-        int diceRoll = 1;
-        System.out.println("You rolled: " + diceRoll);
-
-        if (playerPosition + diceRoll >= board.size()) {
-            System.out.println("You reached the end of the board!");
-            return "GAME_OVER";
-        }
-
-        playerPosition += diceRoll;
-        Cell currentCell = board.get(playerPosition);
-        System.out.println(currentCell.toString());
-
-        return "IN_PROGRESS";
-    }
-
-    /**
-    public void launch() {
-        boolean running = true;
-        while (running) {
-            menu.displayMainMenu();
-            int choice = menu.getUserChoice();
-            switch (choice) {
-                case 1:
-                    player = menu.createCharacter();
-                    boolean wantsToPlay = handleCharacterSetup();
-                    if (wantsToPlay) {
-                        play();
-                    }
-                    break;
-                case 2:
-                    System.out.println("Goodbye!");
-                    running = false;
-                    break;
-                default:
-                    System.out.println("Invalid choice.");
-            }
-        }
-    }
-
-    private boolean handleCharacterSetup() {
-        boolean editing = true;
-        while (editing) {
-            menu.displayCharacterMenu(player);
-            int choice = menu.getUserChoice();
-            switch (choice) {
-                case 1:
-                    menu.showCharacter(player);
-                    break;
-                case 2:
-                    menu.editCharacterName(player);
-                    break;
-                case 3:
-                    return true;
-                case 4:
-                    System.out.println("Exiting to main menu...");
-                    return false;
-                default:
-                    System.out.println("Invalid choice.");
-            }
-        }
-        return false;
-    }
-
-    private void play() {
-        System.out.println("Game starts! You're on cell 1/64.");
-        playerPosition = 1;
-
-        while (playerPosition < 64) {
-            System.out.println("TURN MENU");
+    public String nextTurn(Character character, Scanner scanner) {
+        while (true) {
+            System.out.println("\n--- NEW TURN ---");
             System.out.println("1. Roll the dice");
-            System.out.println("2. Quit game");
+            System.out.println("2. Go to Menu");
             System.out.print("Your choice: ");
+            String choice = scanner.nextLine().trim();
 
-            String input = scanner.nextLine();
-
-            if (input.equals("1")) {
+            if (choice.equals("1")) {
                 int roll = rollDice();
-                System.out.println("You rolled: " + roll);
+                System.out.println("\nYou rolled a " + roll + ".");
 
                 try {
                     movePlayer(roll);
                 } catch (OutOfBoardException e) {
-                    System.out.println("Warning! " + e.getMessage());
+                    System.out.println("You've reached the end of the board. YOU WIN!");
+                    return "WON";
                 }
 
-                System.out.println("Current position: " + playerPosition + "/64");
-            } else if (input.equals("2")) {
-                System.out.println("Game aborted. Returning to main menu.");
-                return;
-            } else {
-                System.out.println("Invalid input. Please enter 1 or 2.");
-            }
-        }
-        System.out.println("Congratulations! You've reached the end!");
+                Cell cell = board.getCell(playerPosition);
+                System.out.println(cell);
+                cell.interact(character);
 
-        String again;
-        while (true) {
-            System.out.print("Play again? (yes/no): ");
-            again = scanner.nextLine().trim();
-            if (again.equalsIgnoreCase("yes")) {
-                player = menu.createCharacter();
-                if (handleCharacterSetup()) {
-                    play();
+                if (character.getLifePoints() <= 0) {
+                    System.out.println(" ");
+                    isGameOver = true;
+                    return "LOST";
                 }
-                return;
-            } else if (again.equalsIgnoreCase("no")) {
-                System.out.println("Thanks for playing!");
-                System.exit(0);
+                return "IN_PROGRESS";
+            } else if (choice.equals("2")) {
+                menu.displayMenu(character);
             } else {
-                System.out.println("Invalid input. Please enter 'yes' or 'no'.");
+                System.out.println("Invalid choice. Please select 1 or 2.");
             }
         }
-    }
-
-    private void movePlayer(int roll) throws OutOfBoardException {
-        int nextPosition = playerPosition + roll;
-        if (nextPosition > 64) {
-            throw new OutOfBoardException("You cannot go beyond cell 64. You're at " + playerPosition + " and rolled a " + roll + ".");
-        }
-        playerPosition = nextPosition;
     }
 
     private int rollDice() {
-        return 1 + (int)(Math.random() * 6);
+        return dice.nextInt(6) + 1;
     }
-    **/
+
+    private void movePlayer(int roll) throws OutOfBoardException {
+        if (playerPosition + roll >= board.getSize()) {
+            throw new OutOfBoardException("Cannot move beyond board limit.");
+        }
+        playerPosition += roll;
+        System.out.println("You move to cell " + playerPosition + ".");
+    }
+
+    public void resetGame() {
+        playerPosition = 0;
+        isGameOver = false;
+    }
 }

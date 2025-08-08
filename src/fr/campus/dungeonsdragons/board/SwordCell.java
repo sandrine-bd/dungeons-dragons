@@ -18,7 +18,7 @@ public class SwordCell extends Cell {
 
     @Override
     public String toString() {
-        return "You find a sword: Strength +5";
+        return "You find a sword!";
     }
 
     @Override
@@ -27,9 +27,9 @@ public class SwordCell extends Cell {
             Weapon sword = new Sword();
             character.setOffensiveEquipment(sword);
             character.setStrength(character.getStrength() + sword.getAttackBoost());
-            System.out.println("You pick a sword. Strength increased by " + sword.getAttackBoost());
+            System.out.println("Strength +" + sword.getAttackBoost());
         } else {
-            System.out.println("You find a sword, but can't use it.");
+            System.out.println("Unfortunately, you can't use it.");
         }
     }
 }

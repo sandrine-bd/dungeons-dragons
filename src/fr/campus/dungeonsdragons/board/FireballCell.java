@@ -18,7 +18,7 @@ public class FireballCell extends Cell {
 
     @Override
     public String toString() {
-        return "You find a fireball: Strength +7";
+        return "You find a fireball!";
     }
 
     @Override
@@ -27,9 +27,9 @@ public class FireballCell extends Cell {
             Spell fireball = new Fireball();
             character.setOffensiveEquipment(fireball);
             character.setStrength(character.getStrength() + fireball.getAttackBoost());
-            System.out.println("You pick a fireball. Strength increased by " + fireball.getAttackBoost());
+            System.out.println("Strength +" + fireball.getAttackBoost());
         } else {
-            System.out.println("You find a fireball, but can't use it.");
+            System.out.println("Unfortunately, you can't use it.");
         }
     }
 }

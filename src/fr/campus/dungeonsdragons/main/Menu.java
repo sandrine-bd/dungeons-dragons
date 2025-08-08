@@ -1,9 +1,5 @@
 package fr.campus.dungeonsdragons.main;
 
-import java.util.Scanner;
-import java.util.Random;
-import java.util.List;
-
 import fr.campus.dungeonsdragons.character.Character;
 import fr.campus.dungeonsdragons.character.Warrior;
 import fr.campus.dungeonsdragons.character.Wizard;
@@ -11,6 +7,10 @@ import fr.campus.dungeonsdragons.equipment.offensive.*;
 import fr.campus.dungeonsdragons.equipment.defensive.*;
 import fr.campus.dungeonsdragons.db.CharacterDAO;
 import fr.campus.dungeonsdragons.db.ConnexionMySQL;
+
+import java.sql.SQLException;
+import java.util.Scanner;
+import java.util.Random;
 
 public class Menu {
     private final Scanner scanner;
@@ -21,20 +21,9 @@ public class Menu {
         this.characterDAO = new ConnexionMySQL().getCharacterDAO();
     }
 
-    public void displayMainMenu() {
-        System.out.println("MAIN MENU");
-        System.out.println("1. New character");
-        System.out.println("2. Quit game");
-    }
-
-    public int getUserChoice() {
-        System.out.print("Your choice: ");
-        int choice = scanner.nextInt();
-        scanner.nextLine(); // consomme le \n qui reste après nextInt()
-        return choice;
-    }
-
     public Character createCharacter() {
+        System.out.println("\n--- CREATE CHARACTER ---");
+
         String type;
         while (true) {
             System.out.print("Choose type (Warrior / Wizard): ");
@@ -49,7 +38,7 @@ public class Menu {
         String name;
         while (true) {
             System.out.print("Enter name: ");
-            name = scanner.nextLine();
+            name = scanner.nextLine().trim();
             if (!name.isEmpty()) {
                 break;
             } else {
@@ -57,56 +46,82 @@ public class Menu {
             }
         }
 
-        int health;
-        int attack;
+        int strength, lifePoints;
         Random random = new Random();
-        DefensiveEquipment defensiveEquipment;
+        DefensiveEquipment defensiveEquipment = random.nextBoolean() ? new SmallPotion() : new BigPotion();
         OffensiveEquipment offensiveEquipment;
-
-        if (random.nextBoolean()) {
-            defensiveEquipment = new SmallPotion();
-        } else {
-            defensiveEquipment = new BigPotion();
-        }
+        Character character;
 
         if (type.equalsIgnoreCase("Warrior")) {
-            health = getRandomValue(5, 10);
-            attack = getRandomValue(5, 10);
+            strength = getRandomValue(5, 10);
+            lifePoints = getRandomValue(5, 10);
             offensiveEquipment = random.nextBoolean() ? new Club() : new Sword();
-            return new Warrior(id, name, attack, health, offensiveEquipment, defensiveEquipment);
+            character = new Warrior(0, name, strength, lifePoints, offensiveEquipment, defensiveEquipment);
         } else {
-            health = getRandomValue(3, 6);
-            attack = getRandomValue(8, 15);
+            strength = getRandomValue(8, 15);
+            lifePoints = getRandomValue(3, 6);
             offensiveEquipment = random.nextBoolean() ? new Lightning() : new Fireball();
-            return new Wizard(id, name, attack, health, offensiveEquipment, defensiveEquipment);
+            character = new Wizard(0, name, strength, lifePoints, offensiveEquipment, defensiveEquipment);
         }
+
+        // sauvegarde dans la BDD
+        int generatedId = 0;
+        try {
+            generatedId = characterDAO.add(character);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        character.setId(generatedId);
+
+        System.out.println("Character saved with ID: " + generatedId);
+        return character;
     }
 
-    public void displayCharacterMenu(Character character) {
-        System.out.println("CHARACTER MENU");
-        System.out.println("1. Show character info");
-        System.out.println("2. Edit name");
-        System.out.println("3. Start the game");
-        System.out.println("4. Quit game");
+    public void displayMenu(Character character) {
+        while (true) {
+            System.out.println("\n--- MENU ---");
+            System.out.println("1. Show character info");
+            System.out.println("2. Edit name");
+            System.out.println("3. Continue playing");
+            System.out.println("4. Quit game");
+
+            System.out.print("Your choice: ");
+            String choice = scanner.nextLine().trim();
+
+            switch (choice) {
+                case "1" -> showCharacter(character);
+                case "2" -> editCharacterName(character);
+                case "3" -> {
+                    return; // continue dans Main
+                }
+                case "4" -> {
+                    System.out.println("Goodbye!");
+                    System.exit(0);
+                }
+                default -> System.out.println("Invalid choice. Please try again.");
+            }
+        }
     }
 
     public void showCharacter(Character character) {
+        System.out.println("\n--- CHARACTER INFO ---");
         System.out.println(character.toString());
     }
 
     public void editCharacterName(Character character) {
-        String newName;
-        while (true) {
-            System.out.print("New name: ");
-            newName = scanner.nextLine().trim();
-            if (!newName.isEmpty()) {
-                break;
-            } else {
-                System.out.println("Name cannot be empty.");
+        System.out.print("Enter new name: ");
+        String newName = scanner.nextLine().trim();
+        if (!newName.isEmpty()) {
+            character.setName(newName);
+            try {
+                characterDAO.update(character); // mise à jour en BDD
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
+            System.out.println("Name updated successfully!");
+        } else {
+            System.out.println("Name cannot be empty.");
         }
-        character.setName(newName);
-        System.out.println("Name updated");
     }
 
     private int getRandomValue(int min, int max) {

@@ -23,7 +23,7 @@ public class SorcererCell extends Cell {
 
     @Override
     public void interact (Character character) {
-        System.out.println("You encounter a sorcerer! FIGHT STARTING: " + character.getName() + " (" + character.getLifePoints() + " life points) attacks Sorcerer ("
+        System.out.println("FIGHT STARTING: " + character.getName() + " (" + character.getLifePoints() + " life points) attacks Sorcerer ("
                 + sorcerer.getLifePoints() + " life points) with " + character.getStrength() + " strength points.");
         sorcerer.setLifePoints(sorcerer.getLifePoints() - character.getStrength());
         if (sorcerer.getLifePoints() <= 0) {
@@ -32,7 +32,7 @@ public class SorcererCell extends Cell {
             System.out.println("The sorcerer has now " + sorcerer.getLifePoints() + " life points. He hits you with " + sorcerer.getStrength() + " strength points.");
             character.setLifePoints(character.getLifePoints() - sorcerer.getStrength());
             if (character.getLifePoints() <= 0) {
-                System.out.println("You're defeated! GAME OVER!");
+                System.out.println("You're defeated!");
                 // ajouter fin du jeu
             } else {
                 System.out.println("You now have " + character.getLifePoints() + " life points.");
