@@ -20,14 +20,14 @@ public class Main {
             } while (gameState.equals("IN_PROGRESS"));
 
             if (gameState.equals("WON")) {
-                System.out.println("Game finished successfully!");
+                System.out.println("\nGame finished successfully!");
             } else if (gameState.equals("LOST")) {
                 System.out.println("GAME OVER!");
             }
 
             boolean validResponse = false;
             while (!validResponse) {
-                System.out.println("Do you want to play again? (yes/no): ");
+                System.out.print("Do you want to play again? (yes/no): ");
                 String response = scanner.nextLine().trim().toLowerCase();
                 if (response.equals("no")) {
                     playAgain = false;

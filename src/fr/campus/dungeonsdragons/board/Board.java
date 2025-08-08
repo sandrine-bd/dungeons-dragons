@@ -1,5 +1,9 @@
 package fr.campus.dungeonsdragons.board;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class Board {
     private final Cell[] cells = new Cell[64];
 
@@ -9,28 +13,31 @@ public class Board {
             cells[i] = new EmptyCell(i);
         }
 
-        // Ennemis
-        setCells(new int[]{45, 52, 56, 62}, DragonCell::new);
-        setCells(new int[]{10, 20, 25, 32, 35, 36, 34, 40, 44, 47}, SorcererCell::new);
-        setCells(new int[]{3, 6, 9, 12, 15, 18, 21, 24, 27, 30}, GoblinCell::new);
+        // Création d'une liste de positions possibles
+        List<Integer> positions = new ArrayList<>();
+        for (int i = 0; i < cells.length; i++) {
+            positions.add(i);
+        }
+        Collections.shuffle(positions); // mélange aléatoire
 
-        // Armes - Sorts
-        setCells(new int[]{2, 11, 5, 22, 38}, ClubCell::new);
-        setCells(new int[]{19, 26, 42, 53}, SwordCell::new);
-        setCells(new int[]{1, 4, 8, 17, 23}, LightningCell::new);
-        setCells(new int[]{48, 49}, FireballCell::new);
-
-        // Potions
-        setCells(new int[]{7, 13, 31, 33, 39, 43}, SmallPotionCell::new);
-        setCells(new int[]{28, 41}, BigPotionCell::new);
+        int index = 0;
+        index = setCells(positions, index, 4, DragonCell::new);
+        index = setCells(positions, index, 10, SorcererCell::new);
+        index = setCells(positions, index, 10, GoblinCell::new);
+        index = setCells(positions, index, 5, ClubCell::new);
+        index = setCells(positions, index, 4, SwordCell::new);
+        index = setCells(positions, index, 5, LightningCell::new);
+        index = setCells(positions, index, 2, FireballCell::new);
+        index = setCells(positions, index, 6, SmallPotionCell::new);
+        index = setCells(positions, index, 2, BigPotionCell::new);
     }
 
-    private void setCells(int[] positions, CellFactory factory) {
-        for (int pos : positions) {
-            if (pos >= 0 && pos < cells.length) {
-                cells[pos] = factory.create(pos);
-            }
+    private int setCells(List<Integer> positions, int startIndex, int count, CellFactory factory) {
+        for (int i = 0; i < count; i++) {
+            int pos = positions.get(startIndex + i);
+            cells[pos] = factory.create(pos);
         }
+        return startIndex + count;
     }
 
     public Cell getCell(int position) {
