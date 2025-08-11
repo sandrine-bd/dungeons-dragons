@@ -1,7 +1,6 @@
 package fr.campus.dungeonsdragons.main;
 
-import fr.campus.dungeonsdragons.board.Board;
-import fr.campus.dungeonsdragons.board.Cell;
+import fr.campus.dungeonsdragons.board.*;
 import fr.campus.dungeonsdragons.character.Character;
 import fr.campus.dungeonsdragons.exception.OutOfBoardException;
 
@@ -42,6 +41,22 @@ public class Game {
 
                 Cell cell = board.getCell(playerPosition);
                 System.out.println(cell);
+
+                if (cell instanceof GoblinCell || cell instanceof SorcererCell || cell instanceof DragonCell) {
+                    System.out.println("You encounter a " + cell.getType());
+                    System.out.println("1. Attack");
+                    System.out.println("2. Run away");
+                }
+                System.out.print("Your choice: ");
+                String fightChoice = scanner.nextLine().trim();
+                if (fightChoice.equals("2")) {
+                    int backSteps = rollDice();
+                    playerPosition = Math.max(0, playerPosition - backSteps); // ne peut pas reculer en-dessous de la case 0
+                    System.out.println("You run away and move back " + backSteps + " steps to position " + playerPosition + ".");
+                    return "IN_PROGRESS";
+                }
+
+                // sinon, interaction normale
                 cell.interact(character);
 
                 if (character.getLifePoints() <= 0) {
@@ -50,6 +65,7 @@ public class Game {
                     return "LOST";
                 }
                 return "IN_PROGRESS";
+
             } else if (choice.equals("2")) {
                 menu.displayMenu(character);
             } else {
