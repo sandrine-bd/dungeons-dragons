@@ -18,7 +18,7 @@ public class SorcererCell extends Cell {
 
     @Override
     public String toString() {
-        return "You encounter a sorcerer!";
+        return "You encounter a Sorcerer!";
     }
 
     @Override
@@ -29,7 +29,7 @@ public class SorcererCell extends Cell {
         if (sorcerer.getLifePoints() <= 0) {
             System.out.println("Sorcerer defeated!");
         } else {
-            System.out.println("The sorcerer has now " + sorcerer.getLifePoints() + " life points. He hits you with " + sorcerer.getStrength() + " strength points.");
+            System.out.println("The Sorcerer has now " + sorcerer.getLifePoints() + " life points. He hits you with " + sorcerer.getStrength() + " strength points.");
             character.setLifePoints(character.getLifePoints() - sorcerer.getStrength());
             if (character.getLifePoints() <= 0) {
                 System.out.println("You're defeated!");

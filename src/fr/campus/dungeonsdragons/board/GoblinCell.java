@@ -18,7 +18,7 @@ public class GoblinCell extends Cell {
 
     @Override
     public String toString() {
-        return "You encounter a goblin!";
+        return "You encounter a Goblin!";
     }
 
     @Override
@@ -29,7 +29,7 @@ public class GoblinCell extends Cell {
         if (goblin.getLifePoints() <= 0) {
             System.out.println("Goblin defeated!");
         } else {
-            System.out.println("The goblin has now " + goblin.getLifePoints() + " life points. He hits you with " + goblin.getStrength() + " strength points.");
+            System.out.println("The Goblin has now " + goblin.getLifePoints() + " life points. He hits you with " + goblin.getStrength() + " strength points.");
             character.setLifePoints(character.getLifePoints() - goblin.getStrength());
             if (character.getLifePoints() <= 0) {
                 System.out.println("You're defeated!");

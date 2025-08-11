@@ -11,12 +11,12 @@ public class Game {
     private final Board board;
     private int playerPosition = 0;
     private boolean isGameOver = false;
-    private final Random dice;
     private final Menu menu;
+    Dice dice6 = new SixSidedDice();
+    Dice dice20 = new TwentySidedDice();
 
     public Game(Menu menu) {
         this.board = new Board();
-        this.dice = new Random();
         this.menu = menu;
     }
 
@@ -29,7 +29,7 @@ public class Game {
             String choice = scanner.nextLine().trim();
 
             if (choice.equals("1")) {
-                int roll = rollDice();
+                int roll = dice6.rollDice();
                 System.out.println("\nYou rolled a " + roll + ".");
 
                 try {
@@ -43,20 +43,34 @@ public class Game {
                 System.out.println(cell);
 
                 if (cell instanceof GoblinCell || cell instanceof SorcererCell || cell instanceof DragonCell) {
-                    System.out.println("You encounter a " + cell.getType());
                     System.out.println("1. Attack");
                     System.out.println("2. Run away");
-                }
-                System.out.print("Your choice: ");
-                String fightChoice = scanner.nextLine().trim();
-                if (fightChoice.equals("2")) {
-                    int backSteps = rollDice();
-                    playerPosition = Math.max(0, playerPosition - backSteps); // ne peut pas reculer en-dessous de la case 0
-                    System.out.println("You run away and move back " + backSteps + " steps to position " + playerPosition + ".");
-                    return "IN_PROGRESS";
+                    System.out.print("Your choice: ");
+                    String fightChoice = scanner.nextLine().trim();
+                    if (fightChoice.equals("2")) {
+                        int backSteps = dice6.rollDice();
+                        playerPosition = Math.max(0, playerPosition - backSteps); // ne peut pas reculer en-dessous de la case 0
+                        System.out.println("You run away and move back " + backSteps + " steps to position " + playerPosition + ".");
+                        return "IN_PROGRESS";
+                    }
+
+                    // sinon, interaction normale
+                    int attackRoll = dice20.rollDice();
+                    System.out.print("You roll a d20 and get " + attackRoll + ": ");
+
+                    int damage = character.getStrength();
+
+                    if (attackRoll == 1) {
+                        System.out.println("Critical fail! You miss your attack.");
+                        damage = 0;
+                    } else if (attackRoll == 20) {
+                        System.out.println("Critical success! +2 damage.");
+                        damage += 2;
+                    } else {
+                        System.out.println("no critical fail or success, normal fight can start.");
+                    }
                 }
 
-                // sinon, interaction normale
                 cell.interact(character);
 
                 if (character.getLifePoints() <= 0) {
@@ -64,18 +78,17 @@ public class Game {
                     isGameOver = true;
                     return "LOST";
                 }
-                return "IN_PROGRESS";
 
-            } else if (choice.equals("2")) {
+                return "IN_PROGRESS";
+            }
+
+            else if (choice.equals("2")) {
                 menu.displayMenu(character);
+
             } else {
                 System.out.println("Invalid choice. Please select 1 or 2.");
             }
         }
-    }
-
-    private int rollDice() {
-        return dice.nextInt(6) + 1;
     }
 
     private void movePlayer(int roll) throws OutOfBoardException {
